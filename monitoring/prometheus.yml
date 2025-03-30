@@ -1,0 +1,15 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'node-service'
+    static_configs:
+      - targets: ['registration-service:3000']
+
+  - job_name: 'python-service'
+    static_configs:
+      - targets: ['notification-service:5000']
+
+  - job_name: 'dotnet-service'
+    static_configs:
+      - targets: ['customer-service:80']
