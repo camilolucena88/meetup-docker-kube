@@ -1,0 +1,7 @@
+fastapi==0.95.0
+uvicorn==0.21.1
+aiokafka==0.8.0
+kafka-python==2.0.2  # Added to fix the missing module
+redis==4.5.1
+python-dotenv
+prometheus-client
