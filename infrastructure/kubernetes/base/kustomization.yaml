@@ -1,0 +1,40 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - kafka/zookeeper-deployment.yaml
+  - kafka/zookeeper-service.yaml
+  - kafka/kafka-deployment.yaml
+  - kafka/kafka-service.yaml
+  - kafka/kafka-ui-deployment.yaml
+  - kafka/kafka-ui-service.yaml
+
+  - postgres/postgres-deployment.yaml
+  - postgres/postgres-service.yaml
+  - postgres/postgres-cm1-configmap.yaml
+  - postgres/postgres-data-persistentvolumeclaim.yaml
+
+  - redis/redis-deployment.yaml
+  - redis/redis-service.yaml
+
+  - registration/registration-service-deployment.yaml
+  - registration/registration-service-service.yaml
+  - registration/registration-service-cm0-configmap.yaml
+  - registration/env-configmap.yaml
+
+  - customer/customer-service-deployment.yaml
+  - customer/customer-service-service.yaml
+  - customer/customer-service-configmap.yaml
+
+  - notification/notification-service-deployment.yaml
+  - notification/notification-service-service.yaml
+  - notification/notification-service-configmap.yaml
+
+  - monitoring/prometheus-deployment.yaml
+  - monitoring/prometheus-configmap.yaml
+  - monitoring/grafana-deployment.yaml
+  - monitoring/grafana-dashboard-config.yaml
+  - monitoring/grafana-datasource-config.yaml
+  - monitoring/monitoring-service.yaml
+
+  - secret.yaml

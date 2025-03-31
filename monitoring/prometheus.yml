@@ -1,5 +1,5 @@
 global:
-  scrape_interval: 15s
+  scrape_interval: 5s
 
 scrape_configs:
   - job_name: 'node-service'
@@ -12,4 +12,4 @@ scrape_configs:
 
   - job_name: 'dotnet-service'
     static_configs:
-      - targets: ['customer-service:80']
+      - targets: ['customer-service:5288']
