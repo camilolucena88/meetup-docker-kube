@@ -4,7 +4,7 @@ services:
   customer-service:
     build:
       context: .
-      dockerfile: customer-service/Dockerfile
+      dockerfile: Dockerfile
     container_name: customer-service
     ports:
       - "5288:5288"
@@ -16,8 +16,8 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=secret
     networks:
-      - backend
+      - backend-network
 
 networks:
-  backend:
+  backend-network:
     driver: bridge

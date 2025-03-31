@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: customer-service-config
+data:
+  DOTNET_ENV: "Production"
+  ASPNETCORE_ENVIRONMENT: "Development"

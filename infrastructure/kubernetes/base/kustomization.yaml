@@ -31,10 +31,10 @@ resources:
   - notification/notification-service-configmap.yaml
 
   - monitoring/prometheus-deployment.yaml
-  - monitoring/prometheus-configmap.yaml
+  - monitoring/grafana-service.yaml
   - monitoring/grafana-deployment.yaml
-  - monitoring/grafana-dashboard-config.yaml
-  - monitoring/grafana-datasource-config.yaml
-  - monitoring/monitoring-service.yaml
+  - monitoring/grafana-cm1-configmap.yaml
+  - monitoring/prometheus-cm0-configmap.yaml
+  - monitoring/prometheus-service.yaml
 
   - secret.yaml
