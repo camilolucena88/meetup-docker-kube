@@ -25,17 +25,12 @@ spec:
             - name: ASPNETCORE_ENVIRONMENT
               value: Development
             - name: KAFKA_BROKER
-              value: kafka-broker:29092
-            - name: POSTGRES_DB
-              value: registration_db
-            - name: POSTGRES_HOST
-              value: postgres-service
-            - name: POSTGRES_PASSWORD
-              value: secret
-            - name: POSTGRES_USER
-              value: admin
-          image: customer-service
+              value: kafka:9092
+            - name: DATABASE_URL
+              value: Host=postgres;Port=5432;Username=admin;Password=secret;Database=registration_db
+          image: customer-service:latest
           name: customer-service
+          imagePullPolicy: Never
           ports:
             - containerPort: 5288
               protocol: TCP

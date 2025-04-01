@@ -4,4 +4,4 @@ metadata:
   name: env
 data:
   PORT: "3000"
-  KAFKA_BROKER: "kafka-broker:29092"
+  KAFKA_BROKER: "kafka:9092"

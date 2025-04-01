@@ -15,7 +15,7 @@ emails_sent = Counter('emails_sent_total', 'Number of emails successfully sent')
 kafka_events_received.inc(0)
 emails_sent.inc(0)
 
-redis_client = redis.Redis(host=os.getenv("REDIS_HOST", "redis-cache"), port=6379, decode_responses=True)
+redis_client = redis.Redis(host=os.getenv("REDIS_HOST", "redis"), port=6379, decode_responses=True)
 
 @app.get("/health")
 def health_check():

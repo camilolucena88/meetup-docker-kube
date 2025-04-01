@@ -12,6 +12,16 @@ spec:
       labels:
         app: postgres
     spec:
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: postgres-data-pvc
+        - name: init-db
+          configMap:
+            name: postgres-cm1
+            items:
+              - key: init-db.sql
+                path: init-db.sql
       containers:
         - name: postgres
           image: postgres:15-alpine
@@ -19,15 +29,14 @@ spec:
             - containerPort: 5432
           env:
             - name: POSTGRES_USER
-              value: "admin"
+              value: admin
             - name: POSTGRES_PASSWORD
-              value: "secret"
+              value: secret
             - name: POSTGRES_DB
-              value: "registration_db"
+              value: registration_db
           volumeMounts:
-            - mountPath: /var/lib/postgresql/data
-              name: postgres-data
-      volumes:
-        - name: postgres-data
-          persistentVolumeClaim:
-            claimName: postgres-data-pvc
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+            - name: init-db
+              mountPath: /docker-entrypoint-initdb.d/init-db.sql
+              subPath: init-db.sql

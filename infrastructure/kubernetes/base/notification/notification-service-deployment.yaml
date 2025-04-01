@@ -52,8 +52,9 @@ spec:
                 configMapKeyRef:
                   key: SMTP_USER
                   name: env
-          image: notification-service
+          image: notification-service:latest
           name: notification-service
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5000
               protocol: TCP
