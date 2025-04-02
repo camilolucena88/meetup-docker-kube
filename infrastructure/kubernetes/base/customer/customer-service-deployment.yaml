@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.customer-service.yml -o k8s-customer/
+    kompose.version: 1.35.0 (HEAD)
+  labels:
+    io.kompose.service: customer-service
+  name: customer-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: customer-service
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.customer-service.yml -o k8s-customer/
+        kompose.version: 1.35.0 (HEAD)
+      labels:
+        io.kompose.service: customer-service
+    spec:
+      containers:
+        - env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+            - name: KAFKA_BROKER
+              value: kafka:9092
+            - name: DATABASE_URL
+              value: Host=postgres;Port=5432;Username=admin;Password=secret;Database=registration_db
+          image: customer-service:latest
+          name: customer-service
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5288
+              protocol: TCP
+      restartPolicy: Always

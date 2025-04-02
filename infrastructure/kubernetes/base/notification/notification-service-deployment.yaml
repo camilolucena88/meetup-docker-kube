@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.override.yml
+    kompose.version: 1.35.0 (HEAD)
+  labels:
+    io.kompose.service: notification-service
+  name: notification-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: notification-service
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.override.yml
+        kompose.version: 1.35.0 (HEAD)
+      labels:
+        io.kompose.service: notification-service
+    spec:
+      containers:
+        - env:
+            - name: KAFKA_BROKER
+              valueFrom:
+                configMapKeyRef:
+                  key: KAFKA_BROKER
+                  name: env
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: REDIS_HOST
+                  name: env
+            - name: SMTP_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: SMTP_PASSWORD
+                  name: env
+            - name: SMTP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: SMTP_PORT
+                  name: env
+            - name: SMTP_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  key: SMTP_SERVER
+                  name: env
+            - name: SMTP_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: SMTP_USER
+                  name: env
+          image: notification-service:latest
+          name: notification-service
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+              protocol: TCP
+      restartPolicy: Always

@@ -3,8 +3,16 @@ const { Pool } = require("pg");
 const kafka = require("kafkajs");
 require("dotenv").config();
 const prometheus = require("express-prometheus-middleware");
+
 const app = express();
 app.use(express.json());
+
+// ✅ Prometheus middleware should be registered early
+app.use(prometheus({
+    metricsPath: '/metrics',
+    collectDefaultMetrics: true,
+    requestDurationBuckets: [0.1, 0.5, 1, 1.5]
+}));
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -39,12 +47,6 @@ app.post("/register", async (req, res) => {
         res.status(500).json({ error: "Error registering user" });
     }
 });
-
-app.use(prometheus({
-    metricsPath: '/metrics',
-    collectDefaultMetrics: true,
-    requestDurationBuckets: [0.1, 0.5, 1, 1.5]
-}));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

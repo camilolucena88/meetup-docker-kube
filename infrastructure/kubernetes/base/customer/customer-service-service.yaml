@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.customer-service.yml -o k8s-customer/
+    kompose.version: 1.35.0 (HEAD)
+  labels:
+    io.kompose.service: customer-service
+  name: customer-service
+spec:
+  ports:
+    - name: "5288"
+      port: 5288
+      targetPort: 5288
+  selector:
+    io.kompose.service: customer-service

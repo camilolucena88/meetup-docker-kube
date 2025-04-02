@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.monitoring.yml -o k8s-monitoring/
+    kompose.version: 1.35.0 (HEAD)
+  labels:
+    io.kompose.service: grafana
+  name: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: grafana
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.monitoring.yml -o k8s-monitoring/
+        kompose.version: 1.35.0 (HEAD)
+      labels:
+        io.kompose.service: grafana
+    spec:
+      containers:
+        - env:
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              value: admin
+            - name: GF_SECURITY_ADMIN_USER
+              value: admin
+          image: grafana/grafana:latest
+          name: grafana
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/lib/grafana/dashboards
+              name: grafana-cm1
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            name: grafana-cm1
+          name: grafana-cm1

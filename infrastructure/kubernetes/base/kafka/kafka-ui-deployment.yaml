@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-ui
+  template:
+    metadata:
+      labels:
+        app: kafka-ui
+    spec:
+      initContainers:
+        - name: wait-for-kafka
+          image: busybox
+          command:
+            - sh
+            - -c
+            - |
+              echo "Waiting for Kafka to be available at kafka:9092...";
+              while ! nc -z kafka 9092; do
+                echo "Kafka not ready yet, retrying...";
+                sleep 3;
+              done
+              echo "Kafka is up!";
+      containers:
+        - name: kafka-ui
+          image: provectuslabs/kafka-ui:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KAFKA_CLUSTERS_0_NAME
+              value: "local"
+            - name: KAFKA_CLUSTERS_0_BOOTSTRAP_SERVERS
+              value: "kafka:9092"

@@ -1,6 +1,3 @@
-### Dockerfile for Registration Service (Node.js + Express)
-
-# Use official Node.js runtime as a parent image
 FROM node:18-alpine
 
 # Set working directory
