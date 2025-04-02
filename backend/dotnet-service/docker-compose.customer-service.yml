@@ -9,15 +9,12 @@ services:
     ports:
       - "5288:5288"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - KAFKA_BROKER=kafka-broker:29092
-      - POSTGRES_HOST=postgres-service
-      - POSTGRES_DB=registration_db
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=secret
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - DATABASE_URL=${DATABASE_URL}
+      - KAFKA_BROKER=${KAFKA_BROKER}
     networks:
       - backend-network
 
 networks:
   backend-network:
-    driver: bridge
+    external: true

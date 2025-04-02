@@ -20,7 +20,7 @@ _Checks if the service is running._
 2. Clone the repository and navigate to the **notification-service** folder.
 3. Run the following command:
    ```sh
-   docker-compose up --build
+   docker-compose -f docker-compose.override.yml up
    ```
 4. The service will be available at `http://localhost:5000`
 

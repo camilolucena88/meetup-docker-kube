@@ -82,4 +82,3 @@ Hello from nginx
 docker-compose down -v
 ```
 Stops and removes containers, network, and the volume.
-
