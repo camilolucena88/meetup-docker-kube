@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  my-nginx:
+    image: nginx
+    container_name: my-nginx
+    networks:
+      - my-network
+    tty: true
+    volumes:
+      - my-volume:/data
+    command: [ "bash", "-c", "apt update && apt install -y iputils-ping && tail -f /dev/null" ]
+
+  ping-server:
+    image: alpine
+    container_name: ping-server
+    networks:
+      - my-network
+    volumes:
+      - my-volume:/data
+    command: tail -f /dev/null
+
+volumes:
+  my-volume:
+
+networks:
+  my-network:
+    driver: bridge
